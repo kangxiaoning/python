@@ -102,6 +102,7 @@ def get_oss_url(url):
     oss_path = []
     try:
         r = requests.get(url, timeout=60, auth=auth)
+        # 手动指定response编码,requests可能会猜错
         r.encoding = 'utf-8'
         soup = BeautifulSoup(r.text, "html.parser")
         table = soup.find('table')
