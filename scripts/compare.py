@@ -20,19 +20,18 @@ def compare_ip():
                 ip = line.strip()
                 if ip and not ip.startswith('#'):
                     ret.append(ip)
-        return ret
+        return set(ret)
 
     def diff(src_path, dst_path):
         src = get_ip(src_path)
         dst = get_ip(dst_path)
         name_src = os.path.basename(src_path)
         name_dst = os.path.basename(dst_path)
-        diff_cnt = 0
-        for ip in src:
-            if ip not in set(dst):
-                diff_cnt += 1
-                print(ip)
-        print('\n{0}中有{1}条数据不在{2}\n'.format(name_src, diff_cnt, name_dst))
+        difference = src - dst
+        for ip in difference:
+            print(ip)
+        diff_cnt = len(difference)
+        print('\n{0}中有 {1} 条数据不在{2}\n'.format(name_src, diff_cnt, name_dst))
 
     diff(path_first, path_second)
     diff(path_second, path_first)
